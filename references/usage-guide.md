@@ -1,52 +1,30 @@
-# 使用指南
+# 使用指南：字幕节奏整理
 
-## 适用场景
-
-当 Shin-video 工作流进入「视频脚本生成」阶段，并需要执行「字幕节奏整理」时使用。
-
-## 推荐提示词
+## 最短使用方式
 
 ```text
-请使用「字幕节奏整理」处理当前 Shin-video 项目。
+请使用 字幕节奏整理，继续处理当前 Shin-video 项目。
 ```
 
-## 项目文件结构
+## 使用前确认
 
-```text
-视频项目/
-├── 文章正文.md
-├── 口播文案.md
-├── 口播音频.mp3
-├── runtime/
-│   ├── asr.json
-│   ├── scenes.json
-│   ├── style-profile.json
-│   └── preview.mp4
-└── 成品/
-    └── 成品.mp4
-```
+请先确认上游输入已经准备好：
 
-## 前期准备
+- runtime/asr.json
+- runtime/scenes.json
+- 口播文案.md
 
-开始完整工作流前，Agent 需要确认：
+## 正常输出
 
-- Node.js 和 npm 可用；
-- Python 可用；
-- FFmpeg 可用；
-- WhisperX 和 faster-whisper 模型可用；
-- Remotion 和 Shin-video 视频模板可用；
-- 用户已经提供文章或文章链接；
-- 用户确认后的口播音频命名为 `口播音频.mp3`。
+- 更新后的 runtime/scenes.json 或字幕节奏字段
 
-## 失败处理
+## 常见失败
 
-- 缺文章：请用户提供文章或链接。
-- 缺音频：提醒用户把口播音频放入项目并命名为 `口播音频.mp3`。
-- 缺 WhisperX：先部署本地 WhisperX 环境，不要手工编时间戳。
-- 缺 Remotion：先部署 Remotion 环境，不要跳过预览。
+- 缺少上游文件：先回到上游 Skill。
+- 用户确认不足：暂停追问，不要自行默认。
+- 本地环境缺失：先按总控仓库安装指南修环境。
+- 输出文件不存在：不要继续下游步骤。
 
-## 输出原则
+## 和总导演配合
 
-- 中间文件放 `runtime/`。
-- 预览视频放 `runtime/preview.mp4`。
-- 最终成片放 `成品/成品.mp4`。
+通常不需要用户手动调用本 Skill。最稳的方式是先使用 `shin-video-director`，由总导演判断当前项目应该调用哪个 Skill。
